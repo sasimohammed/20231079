@@ -14,7 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
   ui->ninie->hide();
   ui->eight->hide();
    ui->two->hide();
-
+  ui->fancy->hide();
+  ui->normal->hide();
+  ui->red->hide();
+  ui->blue->hide();
+ui->only_blue->hide();
 }
 
 
@@ -254,6 +258,236 @@ QImage flip_90(QImage img)
         }
     }
   return image2;
+  // Convert to 32 bit format for easy pixel manipulation
+
+
+}
+QImage only_blue_frame(QImage image)
+{
+  if (!applyFilter) {
+      return image;
+    }
+  for (int i = 0; i < image.width(); i++)
+    {
+      for (int j = 0; j < image.height(); j++)
+        {
+          // Iterate over RGB channels
+          for (int k = 0; k < 3; k++)
+            {
+              // Check if pixel is within the frame boundaries
+              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
+                   (j >= image.height() - 9 && j <= image.height() - 1)))
+                {
+                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to blueish
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
+                {
+                  image.setPixelColor(i, j, QColor(53, 53, 53)); // Set color to blue
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 1)
+                {
+                  image.setPixelColor(i, j, QColor(116, 116, 116)); // Set color to green
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 2)
+                {
+                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to light blue
+                }
+            }
+        }
+    }
+  return image;
+
+
+}
+QImage red_frame(QImage image)
+{
+  if (!applyFilter) {
+      return image;
+    }
+  for (int i = 0; i < image.width(); i++)
+    {
+      for (int j = 0; j < image.height(); j++)
+        {
+          // Iterate over RGB channels
+          for (int k = 0; k < 3; k++)
+            {
+              // Check if pixel is within the frame boundaries
+              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
+                   (j >= image.height() - 9 && j <= image.height() - 1)))
+                {
+                  image.setPixelColor(i, j, QColor(180, 0, 0)); // Set color to redish
+                }
+
+                     // Check if pixel is within the inner red frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
+                {
+                  image.setPixelColor(i, j, QColor(139, 0, 0)); // Set color to dark red
+                }
+
+                     // Check if pixel is within the inner red frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k != 0)
+                {
+                  image.setPixelColor(i, j, QColor(255, 0, 0)); // Set non-red channels to 0
+                }
+            }
+        }
+    }
+   return image;
+}
+QImage blueW_frame(QImage image)
+{
+  if (!applyFilter) {
+      return image;
+    }
+  for (int i = 0; i < image.width(); i++)
+    {
+      for (int j = 0; j < image.height(); j++)
+        {
+          // Iterate over RGB channels
+          for (int k = 0; k < 3; k++)
+            {
+              // Check if pixel is within the frame boundaries
+              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
+                   (j >= image.height() - 9 && j <= image.height() - 1)))
+                {
+                  image.setPixelColor(i, j, QColor(241, 241, 241)); // Set color to blueish
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
+                {
+                  image.setPixelColor(i, j, QColor(53, 53, 53)); // Set color to blue
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 1)
+                {
+                  image.setPixelColor(i, j, QColor(116, 116, 116)); // Set color to green
+                }
+
+                     // Check if pixel is within the inner blue frame boundaries
+              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
+                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
+                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
+                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 2)
+                {
+                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to light blue
+                }
+            }
+        }
+    }
+  return image;
+
+}
+
+  // Convert to 32 bit format for easy pixel manipulation
+QImage fancy_frame(QImage image)
+{
+  if (!applyFilter) {
+      return image;
+    }
+  // Assuming 'image' is a QImage object
+
+  for (int i = 0; i < image.width(); i++)
+    {
+      for (int j = 0; j < image.height(); j++)
+        {
+          // Loop through each color channel (RGB)
+          for (int k = 0; k < 3; k++)
+            {
+              // Outer frame (gray border)
+              if (((i >= 0 && i <= 10) || (j >= 0 && j <= 10) || (i >= image.width() - 10 && i <= image.width() - 1) || (j >= image.height() - 10 && j <= image.height() - 1)))
+                {
+                  image.setPixelColor(i, j, QColor(241, 241, 241)); // Gray color
+                }
+
+                     // Blue border
+              if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 0)
+                {
+                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Blue color
+                }
+
+                     // Green border
+              if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 1)
+                {
+                  image.setPixelColor(i, j, QColor(0, 255, 0)); // Green color
+                }
+
+                     // Red border
+              if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 2)
+                {
+                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Red color
+                }
+
+                     // Thin white frame inside the outer frame
+              if ((i >= 20 && i < 21) || (i >= image.width() - 21 && i < image.width() - 20) || (j >= 20 && j < 21) || (j >= image.height() - 21 && j < image.height() - 20))
+                {
+                  image.setPixelColor(i, j, QColor(255, 255, 255)); // White color
+                }
+
+                     // White frame inside the blue border
+              if ((((j > 25 && j <= 33) && (i > 25 && i < image.width() - 25)) || ((j >= image.height() - 33 && j < image.height() - 25) && (i > 25 && i < image.width() - 25)) || ((i > 25 && i <= 33) && (j > 25 && j <= image.height() - 33)) || ((i >= image.width() - 33 && i < image.width() - 25) && (j > 25 && j <= image.height() - 33))))
+                {
+                  image.setPixelColor(i, j, QColor(255, 255, 255)); // White color
+                }
+
+                     // Two mini gray frames
+              if ((((j > 27 && j <= 30) && (i > 27 && i < image.width() - 30)) || ((j >= image.height() - 30 && j < image.height() - 27) && (i > 27 && i < image.width() - 27)) || ((i > 27 && i <= 30) && (j > 27 && j <= image.height() - 30)) || ((i >= image.width() - 30 && i < image.width() - 27) && (j > 27 && j <= image.height() - 30))) || ((((j > 31 && j <= 33) && (i > 31 && i < image.width() - 33)) || ((j >= image.height() - 33 && j < image.height() - 31) && (i > 31 && i < image.width() - 31)) || ((i > 31 && i <= 33) && (j > 31 && j <= image.height() - 33)) || ((i >= image.width() - 33 && i < image.width() - 31) && (j > 31 && j <= image.height() - 33)))))
+                {
+                  image.setPixelColor(i, j, QColor(188, 188, 188)); // Gray color
+                }
+
+                     // Mini square inside the blue border
+              if ((j > 33 && j <= 43 && i > 33 && i <= 43) || (i >= image.width() - 43 && i < image.width() - 33 && j > 33 && j <= 43) || (j >= image.height() - 43 && j < image.height() - 33 && i > 33 && i <= 43) || (i >= image.width() - 43 && i < image.width() - 33 && j >= image.height() - 43 && j < image.height() - 33))
+                {
+                  image.setPixelColor(i, j, QColor(255, 255, 255)); // White color
+                }
+
+                     // Horizontal line of the bigger square
+              if (((j >= 47 && j <= 50) && (i > 33 && i <= 47)) || ((j >= 47 && j <= 50) && (i >= image.width() - 47 && i < image.width() - 33)) || ((j <= image.height() - 47 && j >= image.height() - 50) && (i >= image.width() - 47 && i < image.width() - 33)) || ((j <= image.height() - 47 && j >= image.height() - 50) && (i > 33 && i <= 47)))
+                {
+                  image.setPixelColor(i, j, QColor(255, 255, 255)); // White color
+                }
+
+                     // Vertical line of the bigger square
+              if (((i >= 47 && i <= 50) && (j > 33 && j <= 50)) || ((i >= 47 && i <= 50) && (j >= image.height() - 50 && j < image.height() - 33)) || ((i <= image.width() - 47 && i >= image.width() - 50) && (j >= image.height() - 50 && j < image.height() - 33)) || ((i <= image.width() - 47 && i >= image.width() - 50) && (j > 33 && j <= 50)))
+                {
+                  image.setPixelColor(i, j, QColor(255, 255, 255)); // White color
+                }
+            }
+        }
+    }
+
+
+
+  return image;
   // Convert to 32 bit format for easy pixel manipulation
 
 
@@ -552,14 +786,12 @@ void MainWindow::on_rotation_clicked()
 
   // Toggle the state of the buttons
 }
-
 void MainWindow::on_eight_clicked()
 {
   applyFilter = true;
   int w = ui->image->width();
   int h = ui->image->height();
   ui->image->setPixmap(QPixmap::fromImage(flip_90(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
-
 
 }
 
@@ -572,13 +804,81 @@ void MainWindow::on_ninie_clicked()
 
 }
 
-
 void MainWindow::on_two_clicked()
 {
   applyFilter = true;
   int w = ui->image->width();
   int h = ui->image->height();
   ui->image->setPixmap(QPixmap::fromImage(flip_270(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+
+}
+
+
+void MainWindow::on_frame_clicked()
+{
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->fancy->hide();
+      ui->normal->hide();
+
+    } else {
+      ui->fancy->show();
+      ui->normal->show();
+
+    }
+
+
+}
+void MainWindow::on_fancy_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(fancy_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+}
+
+void MainWindow::on_normal_clicked()
+{
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->red->hide();
+      ui->blue->hide();
+ ui->only_blue->hide();
+    } else {
+      ui->red->show();
+      ui->blue->show();
+      ui->only_blue->show();
+
+    }
+
+}
+
+void MainWindow::on_red_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(red_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+}
+
+
+void MainWindow::on_blue_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(blueW_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+
+}
+
+
+void MainWindow::on_only_blue_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(only_blue_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+
 
 }
 
