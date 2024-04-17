@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QImage>
 #include <QInputDialog>
+#include <QPainter>
 #include <QVector>
 #define _IMAGE_CLASS_H
 #include "Image_Class.h"
@@ -23,8 +24,13 @@ ui->only_blue->hide();
   ui->light->hide();
   ui->intense->hide();
   ui->medeum->hide();
-}
+  ui->loadnew->hide();
+   ui->applymerg->hide();
+    ui->text->hide();
+      ui->point->hide();
 
+}
+QImage image3;
 int blurRadius;
 MainWindow::~MainWindow() { delete ui; }
 QImage brightImage;
@@ -534,6 +540,25 @@ QImage flip_270(QImage img)
 
 
 }
+QImage crop(QImage img,int w,int h,int x, int y)
+{
+  if (!applyFilter) {
+      return img;
+    }
+
+  QImage img_new(w, h, QImage::Format_RGB32);
+  for (int i = 0; i < w; i++) {
+      for (int j = 0; j < h; j++) {
+          QColor oldColor = img.pixelColor(w + i, h + j);
+          img_new.setPixelColor(i, j, oldColor);
+        }
+    }
+
+  return img_new;
+  // Convert to 32 bit format for easy pixel manipulation
+
+
+}
 QImage light_blur(QImage img)
 {
   if (!applyFilter) {
@@ -764,6 +789,7 @@ QImage intense_blur(QImage img)
 
 
 }
+
 QImage infrared(QImage img)
 {
   if (!applyFilter) {
@@ -823,6 +849,43 @@ QImage infrared(QImage img)
 
   return img;
 }
+QImage draw(QImage image)
+{
+  if (!applyFilter) {
+      return image;
+    }
+
+
+         // Convert to 32 bit format for easy pixel manipulation
+  QPainter painter(&image);
+
+         // Set the color and width of the grid lines
+  QPen pen;
+  pen.setColor(Qt::black);
+  pen.setWidth(1);
+
+  painter.setPen(pen);
+
+         // Determine the size of the squares in the grid
+  int squareSize = 100; // Change this value to adjust the size of the squares
+
+         // Draw the grid lines
+  for (int x = 0; x < image.width(); x += squareSize)
+    {
+      painter.drawLine(x, 0, x, image.height());
+    }
+  for (int y = 0; y < image.height(); y += squareSize)
+    {
+      painter.drawLine(0, y, image.width(), y);
+    }
+
+         // End painting
+  painter.end();
+  return image;
+
+}
+
+
 QImage resize(QImage img,int width,int height)
 {
   if (!applyFilter) {
@@ -840,17 +903,81 @@ void MainWindow::on_brows_clicked()
     {
       QPixmap image;
       image.load(fileName);
-      QLabel *imageLabel = new QLabel;
-      imageLabel->setPixmap(image);
-      imageLabel->show();
 
       int w = ui->image->width();
       int h = ui->image->height();
       ui->image->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
       brightImage = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
     }
-
 }
+QImage merg(QImage img1,QImage img2)
+{
+  if (!applyFilter) {
+      return img1;
+    }
+  int width;
+  int height;
+  int wid;
+  int hig;
+
+  if (img1.width() * img1.height() > img2.width() * img2.height())
+    {
+      width = img1.width();
+      height = img1.height();
+
+
+      QImage img_new_1 = img2.scaled(width, height);
+
+      QImage img_merged(width, height, QImage::Format_RGB32);
+
+      for (int i = 0; i < width; i++)
+        {
+          for (int j = 0; j < height; j++)
+            {
+              QColor color1 = img_new_1.pixelColor(i, j);
+              QColor color2 = img1.pixelColor(i, j);
+
+              int r = (color1.red() + color2.red()) / 2;
+              int g = (color1.green() + color2.green()) / 2;
+              int b = (color1.blue() + color2.blue()) / 2;
+
+              img_merged.setPixelColor(i, j, QColor(r, g, b));
+            }
+        }
+      return img_merged;
+    }
+  else
+    {
+      width = img2.width();
+      height = img2.height();
+
+
+      QImage img_new_2 = img1.scaled(width, height);
+
+      QImage img_merged(width, height, QImage::Format_RGB32);
+
+      for (int i = 0; i < width; i++)
+        {
+          for (int j = 0; j < height; j++)
+            {
+              QColor color1 = img_new_2.pixelColor(i, j);
+              QColor color2 = img2.pixelColor(i, j);
+
+              int r = (color1.red() + color2.red()) / 2;
+              int g = (color1.green() + color2.green()) / 2;
+              int b = (color1.blue() + color2.blue()) / 2;
+
+              img_merged.setPixelColor(i, j, QColor(r, g, b));
+            }
+        }
+      return img_merged;
+    }
+}
+
+
+
+
+
 void MainWindow::on_purprle_clicked()
 {
   applyFilter = true;
@@ -1085,10 +1212,7 @@ void MainWindow::on_intense_clicked()
   int w = ui->image->width();
   int h = ui->image->height();
   ui->image->setPixmap(QPixmap::fromImage(intense_blur(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
-
-
 }
-
 
 void MainWindow::on_resize_clicked()
 {
@@ -1111,5 +1235,95 @@ void MainWindow::on_resize_clicked()
         }
     }
 }
+
+void MainWindow::on_merg_clicked()
+{
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->loadnew->hide();
+
+    } else {
+      ui->loadnew->show();
+
+    }
+
+}
+
+void MainWindow::on_loadnew_clicked()
+{
+  QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Images (*.png *.xpm *.jpg)"));
+  if (!fileName.isEmpty())
+    {
+      QPixmap image;
+      image.load(fileName);
+      int w = ui->image2->width();
+      int h = ui->image2->height();
+      ui->image2->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
+    image3 = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
+    }
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->applymerg->hide();
+
+    } else {
+      ui->applymerg->show();
+
+    }
+
+}
+
+void MainWindow::on_applymerg_clicked()
+{
+  applyFilter = true;
+  int w = ui->image3->width();
+  int h = ui->image3->height();
+  ui->image3->setPixmap(QPixmap::fromImage(merg(brightImage,image3)).scaled(w, h, Qt::KeepAspectRatio));
+  ui->text->setText("The merged image");
+  if (!applyFilter) {
+      ui->text->hide();
+
+    } else {
+      ui->text->show();
+
+    }
+}
+void MainWindow::on_crop_clicked()
+{
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->point->hide();
+
+    } else {
+      ui->point->show();
+
+    }
+}
+
+
+void MainWindow::on_point_clicked()
+{
+  bool ok;
+  int x = QInputDialog::getInt(this, tr("croped Image"),
+                                       tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
+
+  if (ok) {
+      int y = QInputDialog::getInt(this, tr("croped Image"),
+                                            tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
+      int w = QInputDialog::getInt(this, tr("croped Image"),
+                                            tr("Enter the width of the croped image:"), 100, 1, 10000, 1, &ok);
+      int h = QInputDialog::getInt(this, tr("croped Image"),
+                                    tr("Enter the height of the croped image:"), 100, 1, 10000, 1, &ok);
+
+      if (ok) {
+          applyFilter = true;
+          int w = ui->image->width();
+          int h = ui->image->height();
+          ui->image->setPixmap(QPixmap::fromImage(crop(brightImage,w,h,x,y)).scaled(w, h, Qt::KeepAspectRatio));
+
+        }
+    }
+
+}
+
 
 
