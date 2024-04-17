@@ -4,9 +4,10 @@
 #include <QPixmap>
 #include <QImage>
 #include <QInputDialog>
+#include <QVector>
 #define _IMAGE_CLASS_H
 #include "Image_Class.h"
-
+#include <QDebug>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -19,9 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
   ui->red->hide();
   ui->blue->hide();
 ui->only_blue->hide();
+  ui->light->hide();
+  ui->intense->hide();
+  ui->medeum->hide();
 }
 
-
+int blurRadius;
 MainWindow::~MainWindow() { delete ui; }
 QImage brightImage;
 bool applyFilter = false;
@@ -530,6 +534,118 @@ QImage flip_270(QImage img)
 
 
 }
+QImage light_blur(QImage img)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  blurRadius=10;
+  QVector<QVector<QVector<int>>> prefixSum(img.width(), QVector<QVector<int>>(img.height(), QVector<int>(3, 0)));
+
+
+         // Calculate prefix sum for each color channel
+  for (int k = 0; k < 3; k++) {
+      // Calculate prefix sum for the first row
+      for (int i = 0; i < img.height(); i++) {
+          QColor color = img.pixelColor(0, i);
+          int channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+          prefixSum[0][i][k] = channelValue;
+          for (int j = 1; j < img.width(); j++) {
+              color = img.pixelColor(j, i);
+              channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+              prefixSum[j][i][k] = prefixSum[j - 1][i][k] + channelValue;
+            }
+        }
+      // Calculate prefix sum for each cell in the image
+      for (int i = 0; i < img.height(); i++) {
+          for (int j = 0; j < img.width(); j++) {
+              if (i > 0) {
+                  prefixSum[j][i][k] += prefixSum[j][i - 1][k];
+                }
+            }
+        }
+    }
+
+  // Apply the blur using the prefix sum
+  QImage blurredImage(img.width(), img.height(), img.format());
+  for (int i = 0; i < img.height(); i++) {
+      for (int j = 0; j < img.width(); j++) {
+          int r = 0, g = 0, b = 0;
+          for (int k = 0; k < 3; k++) {
+              int sum = prefixSum[qMin(j + blurRadius, img.width() - 1)][qMin(i + blurRadius, img.height() - 1)][k]
+                        - (j - blurRadius > 0 ? prefixSum[j - blurRadius - 1][qMin(i + blurRadius, img.height() - 1)][k] : 0)
+                        - (i - blurRadius > 0 ? prefixSum[qMin(j + blurRadius, img.width() - 1)][i - blurRadius - 1][k] : 0)
+                        + ((j - blurRadius > 0 && i - blurRadius > 0) ? prefixSum[j - blurRadius - 1][i - blurRadius - 1][k] : 0);
+              if (k == 0) r = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else if (k == 1) g = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else b = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+            }
+          blurredImage.setPixelColor(j, i, QColor(r, g, b));
+        }
+    }
+
+  img = blurredImage; // Update the original image with the blurred image
+  return blurredImage;
+
+
+}
+QImage medeum_blur(QImage img)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  blurRadius=18;
+  QVector<QVector<QVector<int>>> prefixSum(img.width(), QVector<QVector<int>>(img.height(), QVector<int>(3, 0)));
+
+
+         // Calculate prefix sum for each color channel
+  for (int k = 0; k < 3; k++) {
+      // Calculate prefix sum for the first row
+      for (int i = 0; i < img.height(); i++) {
+          QColor color = img.pixelColor(0, i);
+          int channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+          prefixSum[0][i][k] = channelValue;
+          for (int j = 1; j < img.width(); j++) {
+              color = img.pixelColor(j, i);
+              channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+              prefixSum[j][i][k] = prefixSum[j - 1][i][k] + channelValue;
+            }
+        }
+      // Calculate prefix sum for each cell in the image
+      for (int i = 0; i < img.height(); i++) {
+          for (int j = 0; j < img.width(); j++) {
+              if (i > 0) {
+                  prefixSum[j][i][k] += prefixSum[j][i - 1][k];
+                }
+            }
+        }
+    }
+
+         // Apply the blur using the prefix sum
+  QImage blurredImage(img.width(), img.height(), img.format());
+  for (int i = 0; i < img.height(); i++) {
+      for (int j = 0; j < img.width(); j++) {
+          int r = 0, g = 0, b = 0;
+          for (int k = 0; k < 3; k++) {
+              int sum = prefixSum[qMin(j + blurRadius, img.width() - 1)][qMin(i + blurRadius, img.height() - 1)][k]
+                        - (j - blurRadius > 0 ? prefixSum[j - blurRadius - 1][qMin(i + blurRadius, img.height() - 1)][k] : 0)
+                        - (i - blurRadius > 0 ? prefixSum[qMin(j + blurRadius, img.width() - 1)][i - blurRadius - 1][k] : 0)
+                        + ((j - blurRadius > 0 && i - blurRadius > 0) ? prefixSum[j - blurRadius - 1][i - blurRadius - 1][k] : 0);
+              if (k == 0) r = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else if (k == 1) g = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else b = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+            }
+          blurredImage.setPixelColor(j, i, QColor(r, g, b));
+        }
+    }
+
+  img = blurredImage; // Update the original image with the blurred image
+  return blurredImage;
+
+
+}
+  // Convert to 32 bit format for easy pixel manipulation
+
 QImage oldtv(QImage img)
 {
   if (!applyFilter) {
@@ -593,6 +709,61 @@ QImage oldtv(QImage img)
   return img;
 
 }
+QImage intense_blur(QImage img)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  blurRadius=30;
+  QVector<QVector<QVector<int>>> prefixSum(img.width(), QVector<QVector<int>>(img.height(), QVector<int>(3, 0)));
+
+
+         // Calculate prefix sum for each color channel
+  for (int k = 0; k < 3; k++) {
+      // Calculate prefix sum for the first row
+      for (int i = 0; i < img.height(); i++) {
+          QColor color = img.pixelColor(0, i);
+          int channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+          prefixSum[0][i][k] = channelValue;
+          for (int j = 1; j < img.width(); j++) {
+              color = img.pixelColor(j, i);
+              channelValue = (k == 0) ? color.red() : (k == 1) ? color.green() : color.blue();
+              prefixSum[j][i][k] = prefixSum[j - 1][i][k] + channelValue;
+            }
+        }
+      // Calculate prefix sum for each cell in the image
+      for (int i = 0; i < img.height(); i++) {
+          for (int j = 0; j < img.width(); j++) {
+              if (i > 0) {
+                  prefixSum[j][i][k] += prefixSum[j][i - 1][k];
+                }
+            }
+        }
+    }
+
+         // Apply the blur using the prefix sum
+  QImage blurredImage(img.width(), img.height(), img.format());
+  for (int i = 0; i < img.height(); i++) {
+      for (int j = 0; j < img.width(); j++) {
+          int r = 0, g = 0, b = 0;
+          for (int k = 0; k < 3; k++) {
+              int sum = prefixSum[qMin(j + blurRadius, img.width() - 1)][qMin(i + blurRadius, img.height() - 1)][k]
+                        - (j - blurRadius > 0 ? prefixSum[j - blurRadius - 1][qMin(i + blurRadius, img.height() - 1)][k] : 0)
+                        - (i - blurRadius > 0 ? prefixSum[qMin(j + blurRadius, img.width() - 1)][i - blurRadius - 1][k] : 0)
+                        + ((j - blurRadius > 0 && i - blurRadius > 0) ? prefixSum[j - blurRadius - 1][i - blurRadius - 1][k] : 0);
+              if (k == 0) r = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else if (k == 1) g = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+              else b = sum / ((2 * blurRadius + 1) * (2 * blurRadius + 1));
+            }
+          blurredImage.setPixelColor(j, i, QColor(r, g, b));
+        }
+    }
+
+  img = blurredImage; // Update the original image with the blurred image
+  return blurredImage;
+
+
+}
 QImage infrared(QImage img)
 {
   if (!applyFilter) {
@@ -652,6 +823,15 @@ QImage infrared(QImage img)
 
   return img;
 }
+QImage resize(QImage img,int width,int height)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  QImage resizedImg = img.scaled(width, height, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  return resizedImg;
+
+}
 
 void MainWindow::on_brows_clicked()
 {
@@ -669,6 +849,7 @@ void MainWindow::on_brows_clicked()
       ui->image->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
       brightImage = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
     }
+
 }
 void MainWindow::on_purprle_clicked()
 {
@@ -826,8 +1007,6 @@ void MainWindow::on_frame_clicked()
       ui->normal->show();
 
     }
-
-
 }
 void MainWindow::on_fancy_clicked()
 {
@@ -848,11 +1027,9 @@ void MainWindow::on_normal_clicked()
       ui->red->show();
       ui->blue->show();
       ui->only_blue->show();
-
     }
 
 }
-
 void MainWindow::on_red_clicked()
 {
   applyFilter = true;
@@ -860,8 +1037,6 @@ void MainWindow::on_red_clicked()
   int h = ui->image->height();
   ui->image->setPixmap(QPixmap::fromImage(red_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
 }
-
-
 void MainWindow::on_blue_clicked()
 {
   applyFilter = true;
@@ -870,15 +1045,71 @@ void MainWindow::on_blue_clicked()
   ui->image->setPixmap(QPixmap::fromImage(blueW_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
 
 }
-
-
 void MainWindow::on_only_blue_clicked()
 {
   applyFilter = true;
   int w = ui->image->width();
   int h = ui->image->height();
   ui->image->setPixmap(QPixmap::fromImage(only_blue_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+}
+void MainWindow::on_blur_clicked()
+{
+  applyFilter = true;
+  if (!applyFilter) {
+      ui->light->hide();
+      ui->intense->hide();
+      ui->medeum->hide();
+    } else {
+      ui->light->show();
+      ui->intense->show();
+      ui->medeum->show();
+    }
+}
+void MainWindow::on_light_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(light_blur(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+}
+void MainWindow::on_medeum_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(medeum_blur(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+}
+void MainWindow::on_intense_clicked()
+{
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(intense_blur(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
 
 
 }
+
+
+void MainWindow::on_resize_clicked()
+{
+  bool ok;
+  int newWidth = QInputDialog::getInt(this, tr("Resize Image"),
+                                       tr("Enter new width:"), 100, 1, 10000, 1, &ok);
+
+  if (ok) {
+      int newHeight = QInputDialog::getInt(this, tr("Resize Image"),
+                                                                           tr("Enter new height:"), 100, 1, 10000, 1, &ok);
+
+      if (ok) {
+          int width;
+          width =newWidth;
+           int hieght=   newHeight;
+
+          ui->image->setPixmap(QPixmap::fromImage(brightImage).scaled(width, hieght, Qt::KeepAspectRatio));
+
+
+        }
+    }
+}
+
 
