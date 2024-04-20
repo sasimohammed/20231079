@@ -6,13 +6,233 @@
 #include <QInputDialog>
 #include <QPainter>
 #include <QVector>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QVBoxLayout>
+#include <QPushButton>
 #define _IMAGE_CLASS_H
 #include "Image_Class.h"
 #include <QDebug>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+
   ui->setupUi(this);
+  QPixmap pixmap("C:/Users/Gaming 3/OneDrive/Documents/untitled1/image1.png");
+   // Replace with the path to your image
+  ui->line1->setStyleSheet("QFrame {"
+                                   "  border: 1px solid black;"  // Change '2px' to make the line bolder or thinner
+                                   "}");
+  ui->line1->setStyleSheet("QFrame {"
+                                   "  background-color: black;"
+                                   "  border: none;"
+                                   "}");
+  ui->frame->setStyleSheet("QFrame {"
+                            "  background-color: black;"
+                            "}");
+
+
+         // Check if the image is loaded successfully
+  if(pixmap.isNull()) {
+      qDebug() << "Failed to load the image!";
+    } else {
+      // Set the pixmap to the label
+      ui->loli->setPixmap(pixmap.scaled(ui->image->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+
+  ui->brows->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 30px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->purprle->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 35px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->bright->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 35px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->inverter->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->dark->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->gray->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->infrafred->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->oldtv->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->flip->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->flipv->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->sunilght->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->rotation->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->blackwight->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+  ui->frame->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->blur->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->resize->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->merg->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  ui->crop->setStyleSheet("QPushButton {"
+                            "background-color: black; border-radius: 15px;"
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #222222;"  // Change as needed
+                            "}");
+
+
+  this->setStyleSheet("background-color: #FFF8CC;");
   ui->ninie->hide();
   ui->eight->hide();
    ui->two->hide();
@@ -29,7 +249,9 @@ ui->only_blue->hide();
     ui->text->hide();
       ui->point->hide();
 
+
 }
+
 QImage image3;
 int blurRadius;
 MainWindow::~MainWindow() { delete ui; }
@@ -101,7 +323,7 @@ QImage gray(QImage img)
 
   return img;
 }
-QImage purple(QImage image)
+QImage purple(QImage& image)
 {
   if (!applyFilter) {
       return image;
@@ -122,7 +344,7 @@ QImage purple(QImage image)
     return image;
 }
 
-QImage blackandwight(QImage img)
+QImage blackandwight(QImage& img)
 {
   if (!applyFilter) {
       return img;
@@ -1274,6 +1496,8 @@ void MainWindow::on_loadnew_clicked()
 
 void MainWindow::on_applymerg_clicked()
 {
+
+
   applyFilter = true;
   int w = ui->image3->width();
   int h = ui->image3->height();
@@ -1301,7 +1525,13 @@ void MainWindow::on_crop_clicked()
 
 
 void MainWindow::on_point_clicked()
+
 {
+  applyFilter = true;
+  int w = ui->image->width();
+  int h = ui->image->height();
+  ui->image->setPixmap(QPixmap::fromImage(draw(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+
   bool ok;
   int x = QInputDialog::getInt(this, tr("croped Image"),
                                        tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
