@@ -13,6 +13,7 @@
 #define _IMAGE_CLASS_H
 #include "Image_Class.h"
 #include <QDebug>
+#include <QGraphicsDropShadowEffect>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -27,9 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
                                    "  background-color: black;"
                                    "  border: none;"
                                    "}");
-  ui->frame->setStyleSheet("QFrame {"
-                            "  background-color: black;"
-                            "}");
 
 
          // Check if the image is loaded successfully
@@ -39,6 +37,18 @@ MainWindow::MainWindow(QWidget *parent)
       // Set the pixmap to the label
       ui->loli->setPixmap(pixmap.scaled(ui->image->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
+  QGraphicsDropShadowEffect* effect = new QGraphicsDropShadowEffect();
+  QGraphicsDropShadowEffect* effect2 = new QGraphicsDropShadowEffect();
+
+  effect->setBlurRadius(10); // Adjust the blur radius to your liking
+  effect->setXOffset(6); // Adjust the horizontal offset
+  effect->setYOffset(6); // Adjust the vertical offset
+  effect->setColor(QColor(100, 100, 100)); // Set the color of the shadow
+
+  ui->image->setGraphicsEffect(effect);
+  ui->image2->setGraphicsEffect(effect2);
+  ui->image->setStyleSheet("QLabel { background-color : #EBEBEB; }");
+   ui->image2->setStyleSheet("QLabel { background-color : #EBEBEB; }");
 
   ui->brows->setStyleSheet("QPushButton {"
                             "background-color: black; border-radius: 30px;"
@@ -1128,10 +1138,14 @@ void MainWindow::on_brows_clicked()
 
       int w = ui->image->width();
       int h = ui->image->height();
-      ui->image->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
+
+             // Scale the image to exactly match the size of the label
+      ui->image->setPixmap(image.scaled(w, h));
+
       brightImage = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
     }
 }
+
 QImage merg(QImage img1,QImage img2)
 {
   if (!applyFilter) {
@@ -1478,10 +1492,14 @@ void MainWindow::on_loadnew_clicked()
     {
       QPixmap image;
       image.load(fileName);
+
       int w = ui->image2->width();
       int h = ui->image2->height();
-      ui->image2->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
-    image3 = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
+
+             // Scale the image to exactly match the size of the label
+      ui->image2->setPixmap(image.scaled(w, h));
+
+      brightImage = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
     }
   applyFilter = true;
   if (!applyFilter) {
