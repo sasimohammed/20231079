@@ -12,9 +12,18 @@
 #include <QPushButton>
 #include<QFileDialog>
 #include<QColordialog>
-#define _IMAGE_CLASS_H
-#include "Image_Class.h"
+#include <QApplication>
+#include <QLabel>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QRect>
 #include <QDebug>
+#include <QDebug>
+#include <QMouseEvent>
+#include <QRubberBand>
+#include <QPoint>
+#include <QGraphicsPixmapItem>
+
 #include <QGraphicsDropShadowEffect>
 int check=2;
 MainWindow::MainWindow(QWidget *parent)
@@ -26,13 +35,13 @@ MainWindow::MainWindow(QWidget *parent)
   palette.setBrush(QPalette::Window, pixmap2);
   this->setPalette(palette);
   if(check==1){
-       connect(ui->bar, &QScrollBar::valueChanged, this, &MainWindow::applyBrightness);
+      connect(ui->bar, &QScrollBar::valueChanged, this, &MainWindow::applyBrightness);
     }
   else if(check==0){
       connect(ui->bar, &QScrollBar::valueChanged, this, &MainWindow::applydarkness);
     }
   else{
-       connect(ui->bar, &QScrollBar::valueChanged, this, &MainWindow::applyblurs);
+      connect(ui->bar, &QScrollBar::valueChanged, this, &MainWindow::applyblurs);
 
     }
 
@@ -40,14 +49,14 @@ MainWindow::MainWindow(QWidget *parent)
   ui-> before->setPixmap(pixmap);
   QPixmap pixmap3("C:/Users/Gaming 3/OneDrive/Documents/untitled1/after.png");
   ui->after->setPixmap(pixmap3);
-   // Replace with the path to your image
+                                  // Replace with the path to your image
   ui->line1->setStyleSheet("QFrame {"
-                                   "  border: 1px solid #A0227A;"  // Change '2px' to make the line bolder or thinner
-                                   "}");
+                            "  border: 1px solid #A0227A;"  // Change '2px' to make the line bolder or thinner
+                            "}");
   ui->line1->setStyleSheet("QFrame {"
-                                   "  background-color: #A0227A;"
-                                   "  border: none;"
-                                   "}");
+                            "  background-color: #A0227A;"
+                            "  border: none;"
+                            "}");
 
 
          // Check if the image is loaded successfully
@@ -70,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->image->setGraphicsEffect(effect);
   ui->image2->setGraphicsEffect(effect2);
   ui->image->setStyleSheet("QLabel { background-color : #EBEBEB; }");
-   ui->image2->setStyleSheet("QLabel { background-color : #EBEBEB; }");
+  ui->image2->setStyleSheet("QLabel { background-color : #EBEBEB; }");
 
   ui->brows->setStyleSheet("QPushButton {"
                             "background-color: #A0227A; border-radius: 6px;"  // Original color
@@ -82,7 +91,17 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
 
-   ui->purprle->setStyleSheet("QPushButton {"
+  ui->purprle->setStyleSheet("QPushButton {"
+                              "background-color: #A0227A; border-radius: 6px;"  // Original color
+                              "}"
+                              "QPushButton:hover {"
+                              "background-color: #444444;"  // Change as needed
+                              "}"
+                              "QPushButton:pressed {"
+                              "background-color: #C0408A;"  // Lighter color when pressed
+                              "}");
+
+  ui->bright->setStyleSheet("QPushButton {"
                              "background-color: #A0227A; border-radius: 6px;"  // Original color
                              "}"
                              "QPushButton:hover {"
@@ -92,7 +111,68 @@ MainWindow::MainWindow(QWidget *parent)
                              "background-color: #C0408A;"  // Lighter color when pressed
                              "}");
 
-  ui->bright->setStyleSheet("QPushButton {"
+  ui->inverter->setStyleSheet("QPushButton {"
+                               "background-color: #A0227A; border-radius: 6px;"  // Original color
+                               "}"
+                               "QPushButton:hover {"
+                               "background-color: #444444;"  // Change as needed
+                               "}"
+                               "QPushButton:pressed {"
+                               "background-color: #C0408A;"  // Lighter color when pressed
+                               "}");
+
+
+  ui->dark->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+
+  ui->gray->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+  ui->infrafred->setStyleSheet("QPushButton {"
+                                "background-color: #A0227A; border-radius: 6px;"  // Original color
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #444444;"  // Change as needed
+                                "}"
+                                "QPushButton:pressed {"
+                                "background-color: #C0408A;"  // Lighter color when pressed
+                                "}");
+
+
+  ui->oldtv->setStyleSheet("QPushButton {"
+                            "background-color: #A0227A; border-radius: 6px;"  // Original color
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #C0408A;"  // Lighter color when pressed
+                            "}");
+  ui->flip->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+
+
+  ui->flipv->setStyleSheet("QPushButton {"
                             "background-color: #A0227A; border-radius: 6px;"  // Original color
                             "}"
                             "QPushButton:hover {"
@@ -102,7 +182,61 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
 
-   ui->inverter->setStyleSheet("QPushButton {"
+
+  ui->sunilght->setStyleSheet("QPushButton {"
+                               "background-color: #A0227A; border-radius: 6px;"  // Original color
+                               "}"
+                               "QPushButton:hover {"
+                               "background-color: #444444;"  // Change as needed
+                               "}"
+                               "QPushButton:pressed {"
+                               "background-color: #C0408A;"  // Lighter color when pressed
+                               "}");
+
+  ui->rotation->setStyleSheet("QPushButton {"
+                               "background-color: #A0227A; border-radius: 6px;"  // Original color
+                               "}"
+                               "QPushButton:hover {"
+                               "background-color: #444444;"  // Change as needed
+                               "}"
+                               "QPushButton:pressed {"
+                               "background-color: #C0408A;"  // Lighter color when pressed
+                               "}");
+
+
+  ui->blackwight->setStyleSheet("QPushButton {"
+                                 "background-color: #A0227A; border-radius: 6px;"  // Original color
+                                 "}"
+                                 "QPushButton:hover {"
+                                 "background-color: #444444;"  // Change as needed
+                                 "}"
+                                 "QPushButton:pressed {"
+                                 "background-color: #C0408A;"  // Lighter color when pressed
+                                 "}");
+
+  ui->frame->setStyleSheet("QPushButton {"
+                            "background-color: #A0227A; border-radius: 6px;"  // Original color
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #C0408A;"  // Lighter color when pressed
+                            "}");
+
+
+  ui->blur->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+
+
+  ui->resize->setStyleSheet("QPushButton {"
                              "background-color: #A0227A; border-radius: 6px;"  // Original color
                              "}"
                              "QPushButton:hover {"
@@ -113,7 +247,62 @@ MainWindow::MainWindow(QWidget *parent)
                              "}");
 
 
-   ui->dark->setStyleSheet("QPushButton {"
+  ui->merg->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+
+  ui->crop->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+  ui->loadnew->setStyleSheet("QPushButton {"
+                           "background-color: #A0227A; border-radius: 6px;"  // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+  ui->applymerg->setStyleSheet("QPushButton {"
+                              "background-color: #A0227A; border-radius: 6px;"  // Original color
+                              "}"
+                              "QPushButton:hover {"
+                              "background-color: #444444;"  // Change as needed
+                              "}"
+                              "QPushButton:pressed {"
+                              "background-color: #C0408A;"  // Lighter color when pressed
+                              "}");
+  ui->fancy->setStyleSheet("QPushButton {"
+                                "background-color: #A0227A; border-radius: 6px;"  // Original color
+                                "}"
+                                "QPushButton:hover {"
+                                "background-color: #444444;"  // Change as needed
+                                "}"
+                                "QPushButton:pressed {"
+                                "background-color: #C0408A;"  // Lighter color when pressed
+                                "}");
+  ui->normal->setStyleSheet("QPushButton {"
+                            "background-color: #A0227A; border-radius: 6px;"  // Original color
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #C0408A;"  // Lighter color when pressed
+                            "}");
+  ui->detect->setStyleSheet("QPushButton {"
                              "background-color: #A0227A; border-radius: 6px;"  // Original color
                              "}"
                              "QPushButton:hover {"
@@ -122,156 +311,16 @@ MainWindow::MainWindow(QWidget *parent)
                              "QPushButton:pressed {"
                              "background-color: #C0408A;"  // Lighter color when pressed
                              "}");
-
-   ui->gray->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-   ui->infrafred->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->oldtv->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-   ui->flip->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->flipv->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->sunilght->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-   ui->rotation->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->blackwight->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-   ui->frame->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->blur->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->resize->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-
-   ui->merg->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
-   ui->crop->setStyleSheet("QPushButton {"
-                             "background-color: #A0227A; border-radius: 6px;"  // Original color
-                             "}"
-                             "QPushButton:hover {"
-                             "background-color: #444444;"  // Change as needed
-                             "}"
-                             "QPushButton:pressed {"
-                             "background-color: #C0408A;"  // Lighter color when pressed
-                             "}");
-
   ui->ninie->hide();
   ui->eight->hide();
-   ui->two->hide();
+  ui->two->hide();
   ui->fancy->hide();
   ui->normal->hide();
-  ui->red->hide();
-  ui->blue->hide();
-ui->only_blue->hide();
-
   ui->loadnew->hide();
-   ui->applymerg->hide();
-    ui->text->hide();
-      ui->point->hide();
-        ui->bar->hide();
+  ui->applymerg->hide();
+  ui->text->hide();
+  ui->point->hide();
+  ui->bar->hide();
 
 }
 
@@ -309,7 +358,7 @@ void MainWindow::applyBrightness(int value)
   int percent = value;
   int w = ui->image2->width();
   int h = ui->image2->height();
-         // Apply the brightness filter
+                                 // Apply the brightness filter
   QImage filteredImage = bright(brightImage, percent,w,h);
 
          // Convert the filtered image to QPixmap and display it
@@ -404,11 +453,11 @@ QImage purple(QImage& image, QColor current,int w,int h)
           image.setPixelColor(i, j, color);
         }
 
-}
-     // Scale the image to exactly match the size of the label
+    }
+      // Scale the image to exactly match the size of the label
   QImage resizedImg = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   return resizedImg;
-   return resizedImg;
+  return resizedImg;
 }
 
 QImage blackandwight(QImage& img,int w,int h)
@@ -443,7 +492,7 @@ QImage blackandwight(QImage& img,int w,int h)
               QRgb newPixel = qRgb(0, 0, 0);
               img.setPixel(i, j, newPixel); // Set the new pixel value
 
-        }
+            }
         }
     }
   QImage resizedImg = img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -570,153 +619,32 @@ QImage flip_90(QImage img)
 
 
 }
-QImage only_blue_frame(QImage image)
+
+QImage frame(QImage image, QColor color,int w,int h)
 {
-  if (!applyFilter) {
-      return image;
-    }
   for (int i = 0; i < image.width(); i++)
     {
       for (int j = 0; j < image.height(); j++)
         {
-          // Iterate over RGB channels
-          for (int k = 0; k < 3; k++)
+          // Check if pixel is within the frame boundaries
+          if (((i >= 0 && i <= 25) || (j >= 0 && j <= 25) || (i >= image.width() - 25 && i <= image.width() - 1) ||
+               (j >= image.height() - 25 && j <= image.height() - 1)))
             {
-              // Check if pixel is within the frame boundaries
-              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
-                   (j >= image.height() - 9 && j <= image.height() - 1)))
-                {
-                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to blueish
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
-                {
-                  image.setPixelColor(i, j, QColor(53, 53, 53)); // Set color to blue
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 1)
-                {
-                  image.setPixelColor(i, j, QColor(116, 116, 116)); // Set color to green
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 2)
-                {
-                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to light blue
-                }
+              image.setPixelColor(i, j, color);
             }
-        }
+
     }
-  return image;
-
-
-}
-QImage red_frame(QImage image)
-{
-  if (!applyFilter) {
-      return image;
     }
-  for (int i = 0; i < image.width(); i++)
-    {
-      for (int j = 0; j < image.height(); j++)
-        {
-          // Iterate over RGB channels
-          for (int k = 0; k < 3; k++)
-            {
-              // Check if pixel is within the frame boundaries
-              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
-                   (j >= image.height() - 9 && j <= image.height() - 1)))
-                {
-                  image.setPixelColor(i, j, QColor(180, 0, 0)); // Set color to redish
-                }
+  QImage resizedImg = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-                     // Check if pixel is within the inner red frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
-                {
-                  image.setPixelColor(i, j, QColor(139, 0, 0)); // Set color to dark red
-                }
-
-                     // Check if pixel is within the inner red frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k != 0)
-                {
-                  image.setPixelColor(i, j, QColor(255, 0, 0)); // Set non-red channels to 0
-                }
-            }
-        }
-    }
-   return image;
-}
-QImage blueW_frame(QImage image)
-{
-  if (!applyFilter) {
-      return image;
-    }
-  for (int i = 0; i < image.width(); i++)
-    {
-      for (int j = 0; j < image.height(); j++)
-        {
-          // Iterate over RGB channels
-          for (int k = 0; k < 3; k++)
-            {
-              // Check if pixel is within the frame boundaries
-              if (((i >= 0 && i <= 9) || (j >= 0 && j <= 9) || (i >= image.width() - 9 && i <= image.width() - 1) ||
-                   (j >= image.height() - 9 && j <= image.height() - 1)))
-                {
-                  image.setPixelColor(i, j, QColor(241, 241, 241)); // Set color to blueish
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 0)
-                {
-                  image.setPixelColor(i, j, QColor(53, 53, 53)); // Set color to blue
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 1)
-                {
-                  image.setPixelColor(i, j, QColor(116, 116, 116)); // Set color to green
-                }
-
-                     // Check if pixel is within the inner blue frame boundaries
-              if ((((j > 9 && j <= 22) && (i > 9 && i < image.width() - 9)) ||
-                   ((j >= image.height() - 22 && j < image.height() - 9) && (i > 9 && i <= image.width() - 9)) ||
-                   ((i > 9 && i <= 22) && (j > 9 && j <= image.height() - 22)) ||
-                   ((i >= image.width() - 22 && i < image.width() - 9) && (j > 9 && j <= image.height() - 22))) && k == 2)
-                {
-                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Set color to light blue
-                }
-            }
-        }
-    }
-  return image;
+  return resizedImg;
 
 }
 
-  // Convert to 32 bit format for easy pixel manipulation
-QImage fancy_frame(QImage image)
+
+
+       // Convert to 32 bit format for easy pixel manipulation
+QImage fancy_frame(QImage image,QColor color,int w,int h)
 {
   if (!applyFilter) {
       return image;
@@ -739,19 +667,19 @@ QImage fancy_frame(QImage image)
                      // Blue border
               if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 0)
                 {
-                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Blue color
+                 image.setPixelColor(i, j, color); // Blue color
                 }
 
                      // Green border
               if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 1)
                 {
-                  image.setPixelColor(i, j, QColor(0, 255, 0)); // Green color
+                 image.setPixelColor(i, j, color); // Green color
                 }
 
                      // Red border
               if ((((j > 10 && j <= 25) && (i > 10 && i < image.width() - 10)) || ((j >= image.height() - 25 && j < image.height() - 10) && (i > 10 && i < image.width() - 10)) || ((i > 10 && i <= 25) && (j > 10 && j <= image.height() - 25)) || ((i >= image.width() - 25 && i < image.width() - 10) && (j > 10 && j <= image.height() - 25))) && k == 2)
                 {
-                  image.setPixelColor(i, j, QColor(0, 0, 255)); // Red color
+                 image.setPixelColor(i, j, color);
                 }
 
                      // Thin white frame inside the outer frame
@@ -794,8 +722,11 @@ QImage fancy_frame(QImage image)
     }
 
 
+  QImage resizedImg = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-  return image;
+  return resizedImg;
+
+
   // Convert to 32 bit format for easy pixel manipulation
 
 
@@ -833,11 +764,82 @@ QImage flip_270(QImage img)
           image2.setPixelColor(i, j, color);
         }
     }
+
+
   return image2;
   // Convert to 32 bit format for easy pixel manipulation
 
 
 }
+QImage detect(QImage img,int w,int h)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  img = img.convertToFormat(QImage::Format_ARGB32);
+
+  int width = img.width();
+  int height = img.height();
+
+  for(int i = 0; i < width; ++i) {
+      for(int j = 0; j < height; ++j) {
+          QRgb pixel = img.pixel(i, j);
+          int r = qRed(pixel);
+          int g = qGreen(pixel);
+          int b = qBlue(pixel);
+
+                 // Calculate the average of RGB values
+          int avg = (r + g + b) ;
+          if(avg>=255){
+              QRgb newPixel = qRgb(255,255, 255);
+              img.setPixel(i, j, newPixel);
+
+            }
+          else{
+
+              QRgb newPixel = qRgb(0, 0, 0);
+              img.setPixel(i, j, newPixel); // Set the new pixel value
+
+            }
+        }
+    }
+  for (int i = 0; i < img.width() - 1; i++) {
+      for (int j = 1; j < img.height() - 1; j++) {
+          int d = std::min(img.width(), img.height()) / 200; // Border to be 0.05% of the min length
+          if ((img.pixelColor(i, j).red() == 0 && img.pixelColor(i, j + 1).red() == 255) || // Horizontal right
+              (img.pixelColor(i, j).red() == 255 && img.pixelColor(i, j + 1).red() == 0) || // Horizontal left
+              (img.pixelColor(i + 1, j).red() == 0 && img.pixelColor(i, j).red() == 255) || // Vertical down
+              (img.pixelColor(i + 1, j).red() == 255 && img.pixelColor(i, j).red() == 0) || // Vertical up
+              (img.pixelColor(i + 1, j + 1).red() == 0 && img.pixelColor(i, j).red() == 255) || // Diagonal down-right
+              (img.pixelColor(i + 1, j + 1).red() == 255 && img.pixelColor(i, j).red() == 0) || // Diagonal up-left
+              (img.pixelColor(i + 1, j - 1).red() == 0 && img.pixelColor(i, j).red() == 255) || // Diagonal down-left
+              (img.pixelColor(i + 1, j - 1).red() == 255 && img.pixelColor(i, j).red() == 0)) // Diagonal up-right
+            {
+              int D = d + j;
+              for (; j < D && j < img.height() - 1; j++) {
+                  for (int l = 0; l < img.depth(); l++) {
+                      // Set pixel to black
+                      img.setPixelColor(i, j, QColor(0, 0, 0));
+                    }
+                }
+              j--; // Adjust j to skip the already processed pixels
+            }
+          else {
+              for (int l = 0; l < img.depth(); l++) {
+                  // Set pixel to white
+                  img.setPixelColor(i, j, QColor(255, 255, 255));
+                }
+            }
+        }
+    }
+
+  QImage resizedImg = img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+  return resizedImg;
+  // Convert to 32 bit format for easy pixel manipulation
+}
+
+
 QImage crop(QImage img,int w,int h,int x, int y)
 {
   if (!applyFilter) {
@@ -847,7 +849,7 @@ QImage crop(QImage img,int w,int h,int x, int y)
   QImage img_new(w, h, QImage::Format_RGB32);
   for (int i = 0; i < w; i++) {
       for (int j = 0; j < h; j++) {
-          QColor oldColor = img.pixelColor(w + i, h + j);
+          QColor oldColor = img.pixelColor(x+ i, y + j);
           img_new.setPixelColor(i, j, oldColor);
         }
     }
@@ -857,6 +859,8 @@ QImage crop(QImage img,int w,int h,int x, int y)
 
 
 }
+
+
 QImage light_blur(QImage img,int percent,int w,int h)
 {
   if (!applyFilter) {
@@ -889,7 +893,7 @@ QImage light_blur(QImage img,int percent,int w,int h)
         }
     }
 
-  // Apply the blur using the prefix sum
+         // Apply the blur using the prefix sum
   QImage blurredImage(img.width(), img.height(), img.format());
   for (int i = 0; i < img.height(); i++) {
       for (int j = 0; j < img.width(); j++) {
@@ -931,7 +935,7 @@ void MainWindow::applyblurs(int value)
 }
 
 
-  // Convert to 32 bit format for easy pixel manipulation
+       // Convert to 32 bit format for easy pixel manipulation
 
 QImage oldtv(QImage& img,int w,int h)
 {
@@ -940,7 +944,7 @@ QImage oldtv(QImage& img,int w,int h)
     }
 
 
-  // Convert to 32 bit format for easy pixel manipulation
+         // Convert to 32 bit format for easy pixel manipulation
   img = img.convertToFormat(QImage::Format_ARGB32);
 
   int width = img.width();
@@ -1097,29 +1101,25 @@ void MainWindow::on_brows_clicked()
     }
 }
 
-QImage merg(QImage img1,QImage img2)
+QImage merg(QImage img1,QImage img2,int w,int h)
 {
   if (!applyFilter) {
       return img1;
     }
   int width;
   int height;
-  int wid;
-  int hig;
 
-  if (img1.width() * img1.height() > img2.width() * img2.height())
+  if (img1.width() * img1.height() >= img2.width() * img2.height())
     {
       width = img1.width();
       height = img1.height();
 
-
       QImage img_new_1 = img2.scaled(width, height);
 
       QImage img_merged(width, height, QImage::Format_RGB32);
-
-      for (int i = 0; i < width; i++)
+      for (int i = 0; i <img_new_1.width(); i++)
         {
-          for (int j = 0; j < height; j++)
+          for (int j = 0; j < img_new_1.height(); j++)
             {
               QColor color1 = img_new_1.pixelColor(i, j);
               QColor color2 = img1.pixelColor(i, j);
@@ -1131,21 +1131,22 @@ QImage merg(QImage img1,QImage img2)
               img_merged.setPixelColor(i, j, QColor(r, g, b));
             }
         }
-      return img_merged;
+      QImage resizedImg =  img_merged.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+      return resizedImg;
+
     }
   else
     {
       width = img2.width();
       height = img2.height();
 
-
       QImage img_new_2 = img1.scaled(width, height);
 
       QImage img_merged(width, height, QImage::Format_RGB32);
-
-      for (int i = 0; i < width; i++)
+      for (int i = 0; i < img_new_2.width(); i++)
         {
-          for (int j = 0; j < height; j++)
+          for (int j = 0; j < img_new_2.height(); j++)
             {
               QColor color1 = img_new_2.pixelColor(i, j);
               QColor color2 = img2.pixelColor(i, j);
@@ -1157,7 +1158,10 @@ QImage merg(QImage img1,QImage img2)
               img_merged.setPixelColor(i, j, QColor(r, g, b));
             }
         }
-      return img_merged;
+      QImage resizedImg =  img_merged.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+      return resizedImg;
+
     }
 }
 
@@ -1175,7 +1179,7 @@ void MainWindow::on_purprle_clicked()
   dialog.setPalette(palette);
   dialog.setOption(QColorDialog::DontUseNativeDialog);
 
-  // Use the dialog with the custom palette
+         // Use the dialog with the custom palette
   QColor color = dialog.getColor(Qt::white, this, "Choose color");
   if (color.isValid()) {
       current = color;
@@ -1185,10 +1189,10 @@ void MainWindow::on_purprle_clicked()
   int w = ui->image2->width();
   int h = ui->image2->height();
 
-  // Apply the purple filter to brightImage and convert it to QPixmap
+         // Apply the purple filter to brightImage and convert it to QPixmap
   QPixmap pixmap = QPixmap::fromImage(purple(brightImage, current,w,h));
 
-  // Scale the pixmap to fit ui->image2 and set it
+         // Scale the pixmap to fit ui->image2 and set it
   ui->image2->setPixmap(pixmap.scaled(w, h, Qt::KeepAspectRatio));
 }
 
@@ -1304,14 +1308,14 @@ void MainWindow::on_rotation_clicked()
   if (!applyFilter) {
       ui->ninie->hide();
       ui->eight->hide();
-       ui->two->show();
+      ui->two->show();
     } else {
       ui->ninie->show();
       ui->eight->show();
-       ui->two->show();
+      ui->two->show();
     }
 
-  // Toggle the state of the buttons
+         // Toggle the state of the buttons
 }
 void MainWindow::on_eight_clicked()
 {
@@ -1339,8 +1343,6 @@ void MainWindow::on_two_clicked()
   ui->image->setPixmap(QPixmap::fromImage(flip_270(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
 
 }
-
-
 void MainWindow::on_frame_clicked()
 {
   applyFilter = true;
@@ -1357,47 +1359,50 @@ void MainWindow::on_frame_clicked()
 void MainWindow::on_fancy_clicked()
 {
   applyFilter = true;
-  int w = ui->image->width();
-  int h = ui->image->height();
-  ui->image->setPixmap(QPixmap::fromImage(fancy_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+  QColorDialog dialog(this);
+  QPalette palette;
+  palette.setColor(QPalette::Window, Qt::blue);
+  dialog.setPalette(palette);
+  dialog.setOption(QColorDialog::DontUseNativeDialog);
+
+         // Use the dialog with the custom palette
+  QColor color = dialog.getColor(Qt::white, this, "Choose color");
+  if (color.isValid()) {
+      current = color;
+      // Apply the color filter to the image here
+    }
+
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+
+         // Apply the purple filter to brightImage and convert it to QPixmap
+  ui->image2->setPixmap(QPixmap::fromImage(fancy_frame(brightImage,current,w,h).scaled(w, h, Qt::KeepAspectRatio)));
 }
 
 void MainWindow::on_normal_clicked()
 {
   applyFilter = true;
-  if (!applyFilter) {
-      ui->red->hide();
-      ui->blue->hide();
- ui->only_blue->hide();
-    } else {
-      ui->red->show();
-      ui->blue->show();
-      ui->only_blue->show();
+  QColorDialog dialog(this);
+  QPalette palette;
+  palette.setColor(QPalette::Window, Qt::blue);
+  dialog.setPalette(palette);
+  dialog.setOption(QColorDialog::DontUseNativeDialog);
+
+         // Use the dialog with the custom palette
+  QColor color = dialog.getColor(Qt::white, this, "Choose color");
+  if (color.isValid()) {
+      current = color;
+      // Apply the color filter to the image here
     }
 
-}
-void MainWindow::on_red_clicked()
-{
-  applyFilter = true;
-  int w = ui->image->width();
-  int h = ui->image->height();
-  ui->image->setPixmap(QPixmap::fromImage(red_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
-}
-void MainWindow::on_blue_clicked()
-{
-  applyFilter = true;
-  int w = ui->image->width();
-  int h = ui->image->height();
-  ui->image->setPixmap(QPixmap::fromImage(blueW_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+
+         // Apply the purple filter to brightImage and convert it to QPixmap
+  ui->image2->setPixmap(QPixmap::fromImage(frame(brightImage,current,w,h).scaled(w, h, Qt::KeepAspectRatio)));
 
 }
-void MainWindow::on_only_blue_clicked()
-{
-  applyFilter = true;
-  int w = ui->image->width();
-  int h = ui->image->height();
-  ui->image->setPixmap(QPixmap::fromImage(only_blue_frame(brightImage)).scaled(w, h, Qt::KeepAspectRatio));
-}
+
 void MainWindow::on_blur_clicked()
 {
   applyFilter = true;
@@ -1414,8 +1419,6 @@ void MainWindow::on_blur_clicked()
     }
 
 }
-
-
 void MainWindow::on_resize_clicked()
 {
   bool ok;
@@ -1424,14 +1427,14 @@ void MainWindow::on_resize_clicked()
 
   if (ok) {
       int newHeight = QInputDialog::getInt(this, tr("Resize Image"),
-                                                                           tr("Enter new height:"), 100, 1, 10000, 1, &ok);
+                                            tr("Enter new height:"), 100, 1, 10000, 1, &ok);
 
       if (ok) {
           int width;
           width =newWidth;
-           int hieght=   newHeight;
+          int hieght=   newHeight;
 
-          ui->image->setPixmap(QPixmap::fromImage(brightImage).scaled(width, hieght, Qt::KeepAspectRatio));
+          ui->image2->setPixmap(QPixmap::fromImage(brightImage).scaled(width, hieght, Qt::KeepAspectRatio));
 
 
         }
@@ -1465,7 +1468,7 @@ void MainWindow::on_loadnew_clicked()
              // Scale the image to exactly match the size of the label
       ui->image2->setPixmap(image.scaled(w, h));
 
-      brightImage = image.toImage(); // Convert QPixmap to QImage and store it in brightImage
+      image3= image.toImage(); // Convert QPixmap to QImage and store it in brightImage
     }
   applyFilter = true;
   if (!applyFilter) {
@@ -1483,9 +1486,9 @@ void MainWindow::on_applymerg_clicked()
 
 
   applyFilter = true;
-  int w = ui->image3->width();
-  int h = ui->image3->height();
-  ui->image3->setPixmap(QPixmap::fromImage(merg(brightImage,image3)).scaled(w, h, Qt::KeepAspectRatio));
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+  ui->image2->setPixmap(QPixmap::fromImage(merg(brightImage,image3,w,h)).scaled(w, h, Qt::KeepAspectRatio));
   ui->text->setText("The merged image");
   if (!applyFilter) {
       ui->text->hide();
@@ -1518,13 +1521,13 @@ void MainWindow::on_point_clicked()
 
   bool ok;
   int x = QInputDialog::getInt(this, tr("croped Image"),
-                                       tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
+                                tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
 
   if (ok) {
       int y = QInputDialog::getInt(this, tr("croped Image"),
-                                            tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
+                                    tr("Enter the x_axis point:"), 100, 1, 10000, 1, &ok);
       int w = QInputDialog::getInt(this, tr("croped Image"),
-                                            tr("Enter the width of the croped image:"), 100, 1, 10000, 1, &ok);
+                                    tr("Enter the width of the croped image:"), 100, 1, 10000, 1, &ok);
       int h = QInputDialog::getInt(this, tr("croped Image"),
                                     tr("Enter the height of the croped image:"), 100, 1, 10000, 1, &ok);
 
@@ -1543,17 +1546,33 @@ void MainWindow::on_image_linkActivated(const QString &link)
   // Set the style sheet on your scrollbar
   // Set the style sheet on your scrollbar
   bar->setStyleSheet(R"(
-      QScrollBar:horizontal {
-        border: none;
-        background: #A0227A;
-        height: 15px;  // Adjust this to make the line thicker
-        margin: 0px 20px 0 20px;
-      }
+                      QScrollBar:horizontal {
+                        border: none;
+                        background: #A0227A;
+                        height: 15px;  // Adjust this to make the line thicker
+                        margin: 0px 20px 0 20px;
+                      }
 
-      )");
+                      )");
 
 
 
 
 }
+
+
+
+
+void MainWindow::on_detect_clicked()
+{
+  applyFilter = true;
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+  ui->image2->setPixmap(QPixmap::fromImage(detect(brightImage,w,h)).scaled(w, h, Qt::KeepAspectRatio));
+
+}
+
+
+
+
 
