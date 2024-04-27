@@ -46,7 +46,8 @@ QImage brightImage;
 bool applyFilter = false;
 
 QImage resizedImg ;
-
+QStack<QImage> undoStack;
+QStack<QImage> redoStack;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -727,8 +728,6 @@ QImage flipH(QImage& image,int w,int h)
 QImage flipV(QImage& image,int w,int h)
 {
 
-
-
   if (!applyFilter) {
       return image;
     }
@@ -748,8 +747,9 @@ QImage flipV(QImage& image,int w,int h)
   return resizedImg;
 
 }
-QImage sunlight(QImage image,int w,int h)
+QImage sunlight(QImage& image,int w,int h)
 {
+  undoStack.push(image);//thie the original with teh original size
   if (!applyFilter) {
       return image;
     }
@@ -775,7 +775,7 @@ QImage sunlight(QImage image,int w,int h)
         }
     }
    resizedImg = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  redoStack.push(resizedImg);
   return resizedImg;
 
 
@@ -1775,5 +1775,30 @@ void MainWindow::on_save_clicked()
 {
 
     saveImage(resizedImg);
+}
+
+void MainWindow::on_umdo_clicked()
+{
+  if (!undoStack.isEmpty()) {
+      int w = ui->image2->width();
+      int h = ui->image2->height();
+      resizedImg = resizedImg.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+      // Push current image state onto redoStack
+      redoStack.push(resizedImg);
+      // Revert to the previous image state
+      resizedImg = undoStack.pop();
+      applyFilter = true;
+
+      // Update the display or widget that shows the image
+      ui->image2->setPixmap(QPixmap::fromImage(resizedImg).scaled(w,h, Qt::KeepAspectRatio));
+    }
+}
+
+
+
+void MainWindow::on_redo_clicked()
+{
+
 }
 
