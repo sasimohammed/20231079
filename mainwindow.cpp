@@ -41,6 +41,7 @@ int check;
 QColor current;
 QImage image3;
 int blurRadius;
+QList<QPushButton*> buttons;
 MainWindow::~MainWindow() { delete ui; }
 QImage brightImage;
 bool applyFilter = false;
@@ -52,9 +53,59 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+  QPushButton* button1 = ui->bright;
+  QPushButton* button2 = ui->blur;
+  QPushButton* button3 = ui->gray;
+  QPushButton* button4 = ui->poster;
+  QPushButton* button5 = ui->flip;
+  QPushButton* button6 = ui->flipv;
+  QPushButton* button7 = ui->blackwight;
+  QPushButton* button8 = ui->frame;
+  QPushButton* button9 = ui->sunilght;
+  QPushButton* button10 = ui->purprle;
+  QPushButton* button11= ui->inverter;
+  QPushButton* button12 = ui->resize;
+  QPushButton* button13 = ui->oldtv;
+  QPushButton* button14= ui->infrafred;
+  QPushButton* button15 = ui->dark;
+  QPushButton* button16 = ui->detect;
+
+  QPushButton* button17 = ui->rotation;
+  QPushButton* button18= ui->merg;
+  QPushButton* button19 = ui->crop;
+  QPushButton* button20 = ui->popart;
+
+  buttons.append(button1);
+  buttons.append(button2);
+  buttons.append(button3);
+  buttons.append(button4);
+  buttons.append(button5);
+  buttons.append(button6);
+  buttons.append(button7);
+  buttons.append(button8);
+  buttons.append(button9);
+  buttons.append(button10);
+  buttons.append(button11);
+  buttons.append(button12);
+  buttons.append(button13);
+  buttons.append(button14);
+  buttons.append(button15);
+  buttons.append(button16);
+  buttons.append(button17);
+  buttons.append(button18);
+  buttons.append(button19);
+buttons.append(button20);
+
+  QVBoxLayout * lay = new QVBoxLayout(this);
+  for (QPushButton* button : buttons) {
+      lay->addWidget(button);
+    }
+  ui->scrollContents->setLayout(lay);
+
+
 
   check=1;
-  QPixmap pixmap2("C:/Users/Gaming 3/OneDrive/Documents/untitled17/Orange7.png");
+  QPixmap pixmap2("C:/Users/Gaming 3/OneDrive/Documents/untitled17/pixekl craft.png");
 
   QPalette palette;
 
@@ -82,12 +133,9 @@ MainWindow::MainWindow(QWidget *parent)
   ui->after->setPixmap(pixmap3);
                                   // Replace with the path to your image
   ui->line1->setStyleSheet("QFrame {"
-                            "  border: 1px solid #0E004C;"  // Change '2px' to make the line bolder or thinner
+                            "  border: 1px #FFFFFF;"  // Change '2px' to make the line bolder or thinner
                             "}");
-  ui->line1->setStyleSheet("QFrame {"
-                            "  background-color: #0E004C;"
-                            "  border: none;"
-                            "}");
+
 
 
          // Check if the image is loaded successfully
@@ -113,7 +161,10 @@ MainWindow::MainWindow(QWidget *parent)
   ui->image2->setStyleSheet("QLabel { background-color : #D8D2D4; }");
 
   ui->brows->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C;"  // Original color
+                            "border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"  // Adjust as needed
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -122,18 +173,23 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
 
-  ui->purprle->setStyleSheet("QPushButton {"
-                              "background-color: #0E004C; border-radius: 6px;"  // Original color
-                              "}"
-                              "QPushButton:hover {"
-                              "background-color: #444444;"  // Change as needed
-                              "}"
-                              "QPushButton:pressed {"
-                              "background-color: #C0408A;"  // Lighter color when pressed
-                              "}");
 
+  ui->purprle->setStyleSheet("QPushButton {"
+                            "background-color: #0E004C;"  // Original color
+                            "border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"  // Adjust as needed
+                            "}"
+                            "QPushButton:hover {"
+                            "background-color: #444444;"  // Change as needed
+                            "}"
+                            "QPushButton:pressed {"
+                            "background-color: #C0408A;"  // Lighter color when pressed
+                            "}");
   ui->bright->setStyleSheet("QPushButton {"
-                             "background-color: #0E004C; border-radius: 6px;"  // Original color
+                             "background-color: #0E004C; border-radius: 6px;"
+                             "width: 200px;"  // Adjust as needed
+                             "height: 50px;"                              // Original color
                              "}"
                              "QPushButton:hover {"
                              "background-color: #444444;"  // Change as needed
@@ -143,7 +199,9 @@ MainWindow::MainWindow(QWidget *parent)
                              "}");
 
   ui->inverter->setStyleSheet("QPushButton {"
-                               "background-color: #0E004C; border-radius: 6px;"  // Original color
+                               "background-color: #0E004C; border-radius: 6px;"
+                               "width: 200px;"  // Adjust as needed
+                               "height: 50px;"                                // Original color
                                "}"
                                "QPushButton:hover {"
                                "background-color: #444444;"  // Change as needed
@@ -154,7 +212,20 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->dark->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+  ui->popart->setStyleSheet("QPushButton {"
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -164,7 +235,9 @@ MainWindow::MainWindow(QWidget *parent)
                            "}");
 
   ui->gray->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -173,7 +246,9 @@ MainWindow::MainWindow(QWidget *parent)
                            "background-color: #C0408A;"  // Lighter color when pressed
                            "}");
   ui->infrafred->setStyleSheet("QPushButton {"
-                                "background-color:#0E004C; border-radius: 6px;"  // Original color
+                                "background-color:#0E004C; border-radius: 6px;"
+                                "width: 200px;"  // Adjust as needed
+                                "height: 50px;"                                 // Original color
                                 "}"
                                 "QPushButton:hover {"
                                 "background-color: #444444;"  // Change as needed
@@ -184,7 +259,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->oldtv->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -193,7 +270,9 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
   ui->flip->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -204,7 +283,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->flipv->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -215,7 +296,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->sunilght->setStyleSheet("QPushButton {"
-                               "background-color:#0E004C; border-radius: 6px;"  // Original color
+                               "background-color:#0E004C; border-radius: 6px;"
+                               "width: 200px;"  // Adjust as needed
+                               "height: 50px;"                                // Original color
                                "}"
                                "QPushButton:hover {"
                                "background-color: #444444;"  // Change as needed
@@ -225,7 +308,9 @@ MainWindow::MainWindow(QWidget *parent)
                                "}");
 
   ui->rotation->setStyleSheet("QPushButton {"
-                               "background-color: #0E004C; border-radius: 6px;"  // Original color
+                               "background-color: #0E004C; border-radius: 6px;"
+                               "width: 200px;"  // Adjust as needed
+                               "height: 50px;"                                // Original color
                                "}"
                                "QPushButton:hover {"
                                "background-color: #444444;"  // Change as needed
@@ -236,7 +321,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->blackwight->setStyleSheet("QPushButton {"
-                                 "background-color:#0E004C; border-radius: 6px;"  // Original color
+                                 "background-color:#0E004C; border-radius: 6px;"
+                                 "width: 200px;"  // Adjust as needed
+                                 "height: 50px;"                                  // Original color
                                  "}"
                                  "QPushButton:hover {"
                                  "background-color: #444444;"  // Change as needed
@@ -246,7 +333,9 @@ MainWindow::MainWindow(QWidget *parent)
                                  "}");
 
   ui->frame->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -257,7 +346,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->blur->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -268,7 +359,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->resize->setStyleSheet("QPushButton {"
-                             "background-color: #0E004C; border-radius: 6px;"  // Original color
+                             "background-color: #0E004C; border-radius: 6px;"
+                             "width: 200px;"  // Adjust as needed
+                             "height: 50px;"                              // Original color
                              "}"
                              "QPushButton:hover {"
                              "background-color: #444444;"  // Change as needed
@@ -279,7 +372,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
   ui->merg->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -289,7 +384,9 @@ MainWindow::MainWindow(QWidget *parent)
                            "}");
 
   ui->crop->setStyleSheet("QPushButton {"
-                           "background-color: #0E004C; border-radius: 6px;"  // Original color
+                           "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                            "}"
                            "QPushButton:hover {"
                            "background-color: #444444;"  // Change as needed
@@ -298,7 +395,9 @@ MainWindow::MainWindow(QWidget *parent)
                            "background-color: #C0408A;"  // Lighter color when pressed
                            "}");
   ui->loadnew->setStyleSheet("QPushButton {"
-                              "background-color: #0E004C; border-radius: 6px;"  // Original color
+                              "background-color: #0E004C; border-radius: 6px;"
+                              "width: 200px;"  // Adjust as needed
+                              "height: 50px;" // Original color
                               "}"
                               "QPushButton:hover {"
                               "background-color: #444444;"  // Change as needed
@@ -307,7 +406,9 @@ MainWindow::MainWindow(QWidget *parent)
                               "background-color: #C0408A;"  // Lighter color when pressed
                               "}");
   ui->applymerg->setStyleSheet("QPushButton {"
-                                "background-color:#0E004C; border-radius: 6px;"  // Original color
+                                "background-color:#0E004C; border-radius: 6px;"
+                                "width: 200px;"  // Adjust as needed
+                                "height: 50px;"                                 // Original color
                                 "}"
                                 "QPushButton:hover {"
                                 "background-color: #444444;"  // Change as needed
@@ -316,7 +417,9 @@ MainWindow::MainWindow(QWidget *parent)
                                 "background-color: #C0408A;"  // Lighter color when pressed
                                 "}");
   ui->fancy->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -325,7 +428,9 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
   ui->normal->setStyleSheet("QPushButton {"
-                             "background-color: #0E004C; border-radius: 6px;"  // Original color
+                             "background-color: #0E004C; border-radius: 6px;"
+                             "width: 200px;"  // Adjust as needed
+                             "height: 50px;"                              // Original color
                              "}"
                              "QPushButton:hover {"
                              "background-color: #444444;"  // Change as needed
@@ -334,7 +439,9 @@ MainWindow::MainWindow(QWidget *parent)
                              "background-color: #C0408A;"  // Lighter color when pressed
                              "}");
   ui->detect->setStyleSheet("QPushButton {"
-                             "background-color: #0E004C; border-radius: 6px;"  // Original color
+                             "background-color: #0E004C; border-radius: 6px;"
+                             "width: 200px;"  // Adjust as needed
+                             "height: 50px;"                              // Original color
                              "}"
                              "QPushButton:hover {"
                              "background-color: #444444;"  // Change as needed
@@ -343,7 +450,9 @@ MainWindow::MainWindow(QWidget *parent)
                              "background-color: #C0408A;"  // Lighter color when pressed
                              "}");
   ui->ninie->setStyleSheet("QPushButton {"
-                             "background-color: #0E004C; border-radius: 6px;"  // Original color
+                             "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                              "}"
                              "QPushButton:hover {"
                              "background-color: #444444;"  // Change as needed
@@ -352,7 +461,9 @@ MainWindow::MainWindow(QWidget *parent)
                              "background-color: #C0408A;"  // Lighter color when pressed
                              "}");
   ui->two->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                          "width: 200px;"  // Adjust as needed
+                          "height: 50px;"                           // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -362,7 +473,9 @@ MainWindow::MainWindow(QWidget *parent)
                             "}");
 
   ui->eight->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -371,7 +484,9 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
   ui->start->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                            "width: 200px;"  // Adjust as needed
+                            "height: 50px;"                             // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -380,7 +495,9 @@ MainWindow::MainWindow(QWidget *parent)
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
   ui->save->setStyleSheet("QPushButton {"
-                            "background-color: #0E004C; border-radius: 6px;"  // Original color
+                            "background-color: #0E004C; border-radius: 6px;"
+                           "width: 200px;"  // Adjust as needed
+                           "height: 50px;"                            // Original color
                             "}"
                             "QPushButton:hover {"
                             "background-color: #444444;"  // Change as needed
@@ -388,6 +505,27 @@ MainWindow::MainWindow(QWidget *parent)
                             "QPushButton:pressed {"
                             "background-color: #C0408A;"  // Lighter color when pressed
                             "}");
+  ui->poster->setStyleSheet("QPushButton {"
+                           "background-color: #0E004C; border-radius: 6px;"
+                             "width: 200px;"  // Adjust as needed
+                             "height: 50px;"                              // Original color
+                           "}"
+                           "QPushButton:hover {"
+                           "background-color: #444444;"  // Change as needed
+                           "}"
+                           "QPushButton:pressed {"
+                           "background-color: #C0408A;"  // Lighter color when pressed
+                           "}");
+  ui->point->setStyleSheet("QPushButton {"
+                             "background-color: #0E004C; border-radius: 6px;"
+                                                          // Original color
+                             "}"
+                             "QPushButton:hover {"
+                             "background-color: #444444;"  // Change as needed
+                             "}"
+                             "QPushButton:pressed {"
+                             "background-color: #C0408A;"  // Lighter color when pressed
+                             "}");
   ui->ninie->hide();
   ui->eight->hide();
   ui->two->hide();
@@ -395,7 +533,7 @@ MainWindow::MainWindow(QWidget *parent)
   ui->normal->hide();
   ui->loadnew->hide();
   ui->applymerg->hide();
-  ui->text->hide();
+
   ui->point->hide();
   ui->bar->hide();
   ui->purprle->hide();
@@ -423,6 +561,8 @@ MainWindow::MainWindow(QWidget *parent)
                   ui->flipv->hide();
                     ui->line1->hide();
                      ui->save->hide();
+                    ui->poster->hide();
+                       ui->scrollArea->hide();
 }
 
 
@@ -504,7 +644,59 @@ QImage dark(QImage img, int percent,int w,int h)
           img.setPixel(i, j, qRgb(r, g, b));
         }
     }
-  QImage resizedImg = img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  resizedImg = img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+  return resizedImg;
+
+}
+QImage pop(QImage& image, QColor color,int w,int h)
+
+{
+  for (int i = 0; i < image.width(); i++) {
+      for (int j = 0; j < image.height(); j++) {
+          QColor color = image.pixelColor(i, j);
+          int h;
+          if (i % 2 == 0 && j % 2 == 0) {
+              h = qMax(0, color.red() - 50);
+              color.setRed(h);
+              h = qMax(0, color.green() - 50);
+              color.setGreen(h);
+              h = qMax(0, color.blue() - 50);
+              color.setBlue(h);
+            } else {
+              h = qMin(255, color.red() + 50);
+              color.setRed(h);
+              h = qMin(255, color.green() + 50);
+              color.setGreen(h);
+              h = qMin(255, color.blue() + 50);
+              color.setBlue(h);
+            }
+          image.setPixelColor(i, j, color);
+        }
+    }
+  for (int i = 0; i < image.width(); i++) {
+      for (int j = 0; j < image.height(); j++) {
+          QColor color2 = image.pixelColor(i, j);
+          // Calculate luminance
+          int in = (int) (0.2126 * color2.red() + 0.7152 * color2.green() + 0.0722 * color2.blue());
+          if (in >= 128) {
+              // Change color to userColor
+              color2.setRed(color.red());
+              color2.setGreen(color.green());
+              color2.setBlue(color.blue());
+            } else {
+              // Change color to dark yellow
+              color2.setRed(color.red()/2);
+              color2.setGreen(color.green()/2);
+              color2.setBlue(color.blue()/2);
+
+            }
+          image.setPixelColor(i, j, color2);
+        }
+    }
+
+
+   resizedImg =image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
   return resizedImg;
 
@@ -721,13 +913,15 @@ QImage flipH(QImage& image,int w,int h)
                  // Copy pixel from original image to flipped image
           image2.setPixel(i, j, pixel);
         }
-    }   resizedImg = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }     brightImage = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
 
 }
 QImage flipV(QImage& image,int w,int h)
 {
-
+ undoStack.push(image);//
   if (!applyFilter) {
       return image;
     }
@@ -743,12 +937,15 @@ QImage flipV(QImage& image,int w,int h)
           image2.setPixel(i, j, pixel);
         }
     }
-   resizedImg = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  brightImage = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
-
 }
 QImage sunlight(QImage& image,int w,int h)
 {
+
+
   undoStack.push(image);//thie the original with teh original size
   if (!applyFilter) {
       return image;
@@ -794,16 +991,57 @@ QImage flip_90(QImage& img,int w,int h)
           image2.setPixelColor(i, j, color);
         }
     }
-   resizedImg = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  brightImage = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
 
   // Convert to 32 bit format for easy pixel manipulation
 
 
 }
+QImage poster(QImage& img,int w,int h)
+{
+  if (!applyFilter) {
+      return img;
+    }
+  int levels = 3;  // Number of color levels (adjust as needed)
+  int scale = 256 / levels;
 
-QImage frame(QImage image, QColor color,int w,int h)
+// Assume this is your image
+  for(int i=0; i<img.width(); i++){
+      for(int j=0; j<img.height(); j++){
+          QColor color(img.pixel(i,j));
+          int r = (color.red() / scale) * scale;
+          int g = (color.green() / scale) * scale;
+          int b = (color.blue() / scale) * scale;
+          img.setPixel(i, j, qRgb(r,g,b));
+        }
+    }
+  double factor = (50/ 100.0) + 1.0;
+  for (int i = 0; i < img.width(); ++i)
+    {
+      for (int j = 0; j < img.height(); ++j)
+        {
+          QRgb pixel = img.pixel(i, j);
+          int r = qBound(0, static_cast<int>(qRed(pixel) * factor), 255);
+          int g = qBound(0, static_cast<int>(qGreen(pixel) * factor), 255);
+          int b = qBound(0, static_cast<int>(qBlue(pixel) * factor), 255);
+          img.setPixel(i, j, qRgb(r, g, b));
+        }
+    }
+
+  brightImage = img.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
+  return resizedImg;
+
+         // Convert to 32 bit format for easy pixel manipulation
+
+
+}
+
+QImage frame(QImage&image, QColor color,int w,int h)
 {
   for (int i = 0; i < image.width(); i++)
     {
@@ -818,16 +1056,16 @@ QImage frame(QImage image, QColor color,int w,int h)
 
         }
     }
-   resizedImg = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  brightImage = image.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
-
 }
 
 
 
        // Convert to 32 bit format for easy pixel manipulation
-QImage fancy_frame(QImage image,QColor color,int w,int h)
+QImage fancy_frame(QImage& image,QColor color,int w,int h)
 {
   if (!applyFilter) {
       return image;
@@ -928,11 +1166,10 @@ QImage flip_180(QImage& img,int w,int h)
           image2.setPixelColor(i, j, color);
         }
     }
-   resizedImg = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  brightImage = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
-
-
   // Convert to 32 bit format for easy pixel manipulation
 
 
@@ -951,10 +1188,10 @@ QImage flip_270(QImage& img,int w,int h)
           image2.setPixelColor(j, img.width()-1-i, color);
         }
     }
-   resizedImg = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
+  brightImage = image2.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  redoStack.push(brightImage);
+  resizedImg=  brightImage;
   return resizedImg;
-
 
   // Convert to 32 bit format for easy pixel manipulation
 
@@ -1441,11 +1678,17 @@ void MainWindow::on_rotation_clicked()
   if (!applyFilter) {
       ui->ninie->hide();
       ui->eight->hide();
-      ui->two->show();
+      ui->two->hide();
     } else {
       ui->ninie->show();
       ui->eight->show();
       ui->two->show();
+       ui->point->hide();
+        ui->applymerg->hide();
+         ui->loadnew->hide();
+          ui->fancy->hide();
+           ui->normal->hide();
+
     }
 
          // Toggle the state of the buttons
@@ -1486,6 +1729,13 @@ void MainWindow::on_frame_clicked()
     } else {
       ui->fancy->show();
       ui->normal->show();
+       ui->point->hide();
+         ui->loadnew->hide();
+            ui->applymerg->hide();
+             ui->ninie->hide();
+             ui->eight->hide();
+              ui->two->hide();
+
 
     }
 }
@@ -1532,7 +1782,7 @@ void MainWindow::on_normal_clicked()
   int h = ui->image2->height();
 
          // Apply the purple filter to brightImage and convert it to QPixmap
-  ui->image2->setPixmap(QPixmap::fromImage(frame(brightImage,current,w,h).scaled(w, h, Qt::KeepAspectRatio)));
+  ui->image2->setPixmap(QPixmap::fromImage(frame(resizedImg,current,w,h).scaled(w, h, Qt::KeepAspectRatio)));
 
 }
 
@@ -1577,11 +1827,19 @@ void MainWindow::on_resize_clicked()
 void MainWindow::on_merg_clicked()
 {
   applyFilter = true;
-  if (!applyFilter) {
-      ui->loadnew->hide();
+  if (applyFilter) {
+      ui->loadnew->show();
+       ui->point->hide();
+        ui->normal->hide();
+         ui->fancy->hide();
+          ui->ninie->hide();
+           ui->eight->hide();
+            ui->two->hide();
+
 
     } else {
       ui->loadnew->show();
+
 
     }
 
@@ -1622,14 +1880,7 @@ void MainWindow::on_applymerg_clicked()
   int w = ui->image2->width();
   int h = ui->image2->height();
   ui->image2->setPixmap(QPixmap::fromImage(merg(brightImage,image3,w,h)).scaled(w, h, Qt::KeepAspectRatio));
-  ui->text->setText("The merged image");
-  if (!applyFilter) {
-      ui->text->hide();
 
-    } else {
-      ui->text->show();
-
-    }
 }
 void MainWindow::on_crop_clicked()
 {
@@ -1639,6 +1890,17 @@ void MainWindow::on_crop_clicked()
 
     } else {
       ui->point->show();
+       ui->fancy->hide();
+       ui->normal->hide();
+       ui->ninie->hide();
+        ui->eight->hide();
+         ui->two->hide();
+          ui->applymerg->hide();
+           ui->loadnew->hide();
+
+
+
+
 
     }
 }
@@ -1708,7 +1970,7 @@ void MainWindow::on_start_clicked()
 
   if (applyFilter) {
       // Code to apply filter and show widgets
-      QPixmap pixmap("C:/Users/Gaming 3/OneDrive/Documents/untitled17/pixekl craft.2png.png");
+      QPixmap pixmap("C:/Users/Gaming 3/OneDrive/Documents/untitled17/pixekl craft9.png");
       QPalette palette;
       palette.setBrush(this->backgroundRole(), QBrush(pixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation)));
       this->setPalette(palette);
@@ -1738,7 +2000,8 @@ void MainWindow::on_start_clicked()
       ui->line1->show();
        ui->start->hide();
         ui->save->show();
-
+        ui->poster->show();
+ ui->scrollArea->show();
 
     } else {
 
@@ -1766,6 +2029,7 @@ void MainWindow::on_start_clicked()
       ui->before->hide();
       ui->flipv->hide();
       ui->line1->hide();
+       ui->poster->hide();
 
 
     }
@@ -1780,15 +2044,16 @@ void MainWindow::on_save_clicked()
 void MainWindow::on_umdo_clicked()
 {
   if (!undoStack.isEmpty()) {
-      int w = ui->image2->width();
-      int h = ui->image2->height();
-      resizedImg = resizedImg.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
 
       // Push current image state onto redoStack
       redoStack.push(resizedImg);
       // Revert to the previous image state
       resizedImg = undoStack.pop();
       applyFilter = true;
+      int w = ui->image2->width();
+      int h = ui->image2->height();
+      resizedImg = resizedImg.scaled(w, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
       // Update the display or widget that shows the image
       ui->image2->setPixmap(QPixmap::fromImage(resizedImg).scaled(w,h, Qt::KeepAspectRatio));
@@ -1801,4 +2066,40 @@ void MainWindow::on_redo_clicked()
 {
 
 }
+
+void MainWindow::on_poster_clicked()
+{
+  applyFilter = true;
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+  ui->image2->setPixmap(QPixmap::fromImage(poster(brightImage,w,h)).scaled(w, h, Qt::KeepAspectRatio));
+
+
+}
+
+
+void MainWindow::on_popart_clicked()
+{
+
+  applyFilter = true;
+  QColorDialog dialog(this);
+  QPalette palette;
+  palette.setColor(QPalette::Window, Qt::blue);
+  dialog.setPalette(palette);
+  dialog.setOption(QColorDialog::DontUseNativeDialog);
+
+         // Use the dialog with the custom palette
+  QColor color = dialog.getColor(Qt::white, this, "Choose color");
+  if (color.isValid()) {
+      current = color;
+      // Apply the color filter to the image here
+    }
+  int w = ui->image2->width();
+  int h = ui->image2->height();
+
+         // Apply the purple filter to brightImage and convert it to QPixmap
+  ui->image2->setPixmap(QPixmap::fromImage(pop(brightImage,current,w,h).scaled(w, h, Qt::KeepAspectRatio)));
+}
+
+
 
